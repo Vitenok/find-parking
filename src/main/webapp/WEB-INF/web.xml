@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:javaee="http://java.sun.com/xml/ns/javaee"
-	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	
-	<javaee:display-name>Parking Places Around The City</javaee:display-name>
-	
+<web-app xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <javaee:display-name>Parking Places Around The City</javaee:display-name>
 </web-app>
