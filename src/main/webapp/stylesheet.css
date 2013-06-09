@@ -1,0 +1,57 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: white;
+}
+
+h2 {
+	font-family: sans-serif;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	color: white;
+	font-family: Verdana;
+}
+
+
+#header {
+	color: white;
+	position: relative;
+	top: -10px;
+	background-color: #3c4543;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+#form {
+	text-align: right;
+}
+#aform {
+	text-align: center;
+}
+}
+
+ table.center {
+    margin-left:auto; 
+    margin-right:auto;
+  }
+  
+table {
+	font-family: sans-serif;
+	width: 90%;
+	margin: 0 auto;
+	table-layout: fixed;
+	width: 500px;
+	border-collapse: collapse;
+	 border:1px solid black; 
+	}
+
+th,td {
+	width: 25%;
+	overflow: hidden;
+	width: 200px;
+	border:1px solid black; 
+}
