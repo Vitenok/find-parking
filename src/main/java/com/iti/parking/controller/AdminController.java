@@ -43,9 +43,7 @@ public class AdminController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 
-		switch (servletPath) {
-
-		case "/admin/createAdmin":
+		if ("/admin/createAdmin".equals(servletPath)) {
 			try {
 				Admin adminToAdd = new Admin(request.getParameter("login"), request.getParameter("pass"));
 				adminService.addAdmin(adminToAdd);
@@ -54,9 +52,7 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Admin with this name already exists");
 			}
-			break;
-
-		case "/admin/deleteAdmin":
+		} else if ("/admin/deleteAdmin".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				adminService.deleteAdminById(id);
@@ -64,9 +60,9 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("There are no admins with this ID");
 			}
-			break;
+		}
 
-		case "/admin/updateAdmin":
+		else if ("/admin/updateAdmin".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				String newLogin = request.getParameter("login");
@@ -76,9 +72,9 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Admin with this name already exists");
 			}
-			break;
+		}
 
-		case "/admin/parking/createParking":
+		else if ("/admin/parking/createParking".equals(servletPath)) {
 			try {
 				String address = request.getParameter("address");
 				int capacity = Integer.parseInt(request.getParameter("capacity"));
@@ -90,9 +86,9 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Parking with this address already exists");
 			}
-			break;
+		}
 
-		case "/admin/parking/deleteParking":
+		else if ("/admin/parking/deleteParking".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				adminService.deleteParkingPlaceById(id);
@@ -100,9 +96,9 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("There are no parkings with this ID");
 			}
-			break;
+		}
 
-		case "/admin/parking/updateParking":
+		else if ("/admin/parking/updateParking".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				String newAddress = request.getParameter("address");
@@ -113,7 +109,6 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Parking with this name already exists");
 			}
-			break;
 		}
 	}
 

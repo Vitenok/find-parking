@@ -17,7 +17,9 @@ public class ConnectionFactory {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/parking", "root", "root");
 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		try {
@@ -35,12 +37,13 @@ public class ConnectionFactory {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/parking", "root", "root");
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return connection;
 	}
 
-	
 }
