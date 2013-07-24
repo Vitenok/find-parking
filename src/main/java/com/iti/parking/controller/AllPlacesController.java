@@ -1,62 +1,54 @@
 package com.iti.parking.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.iti.parking.entity.ParkingPlace;
-import com.iti.parking.util.ConnectionFactory;
+import com.iti.parking.entity.jpa.ParkingCurrentState;
+import com.iti.parking.entity.jpa.ParkingHistoricalState;
+import com.iti.parking.entity.jpa.ParkingPlace;
+import com.iti.services.jpa.ParkingPlaceService;
+import com.iti.services.jpa.StateService;
 
-/**
- * Servlet implementation class ParkingViewer
- */
-@WebServlet("")
+;
+
+@WebServlet(name = "AllPlacesController", urlPatterns = { "" })
 public class AllPlacesController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-//	static Connection connection;
-//	Integer parkingID;
-//	String parkingAddress;
-//	Integer parkingCapacity;
-//	String parkingAvailableSlots;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			Connection connection = ConnectionFactory.getConnection();
-			Statement statement = connection.createStatement();
+	private static final long serialVersionUID = 7155634063731711969L;
 
-			List<ParkingPlace> parkingViewer = new ArrayList<ParkingPlace>();
+	StateService stateService = new StateService();
 
-			ResultSet resultSet = statement.executeQuery("select * from parking_places");
-			while (resultSet.next()) {
-				ParkingPlace tableRow = new ParkingPlace();
-				tableRow.setParkingID(resultSet.getInt("id"));
-				tableRow.setParkingAddress(resultSet.getString("parking_address"));
-				tableRow.setParkingCapacity(resultSet.getInt("parking_capacity"));
-				tableRow.setParkingAvailableSlots(resultSet.getString("parking_available_slots"));
-				parkingViewer.add(tableRow);
-			}
-			request.setAttribute("tableRows", parkingViewer);
-			RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-			view.forward(request, response);
-			resultSet.close();
-			statement.close();
-			return;
+		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
+		request.setAttribute("tableRows", parkingViewer);
+		request.getRequestDispatcher("map.jsp").forward(request, response);
+	}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
+		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
+		request.setAttribute("tableRows", parkingViewer);
+
+		String userCarNumber = request.getParameter("carNumber");
+		if (userCarNumber != null && !userCarNumber.isEmpty()) {
+			// request.setAttribute("action", "");
+			ParkingCurrentState parkingCurrentState = stateService.getStateForCar(userCarNumber);
+			List<ParkingHistoricalState> parkingHistoricalState = stateService.getUsedSlotsByCar(userCarNumber);
+			request.setAttribute("currentStateForCar", parkingCurrentState);
+			request.setAttribute("historicalStateForCar", parkingHistoricalState);
+
 		}
+		request.getRequestDispatcher("map.jsp").forward(request, response);
 	}
 
 }
-

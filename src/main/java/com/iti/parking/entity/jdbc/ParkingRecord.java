@@ -1,4 +1,4 @@
-package com.iti.parking.entity;
+package com.iti.parking.entity.jdbc;
 
 import java.sql.Connection;
 import java.sql.Date;

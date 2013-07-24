@@ -5,7 +5,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.iti.parking.entity.ParkingPlace;
+import com.iti.parking.entity.jdbc.ParkingPlace;
 
 
 public class ParkingViewerTest {
