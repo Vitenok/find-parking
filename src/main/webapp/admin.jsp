@@ -234,7 +234,7 @@
 		%>
 		<tr>
 			<td><%=pve.getId()%></td>
-			<td><%=pve.getParkingId()%></td>
+			<td><%=pve.getParking().getId()%></td>
 			<td><%=pve.getParkingUserCarNumber()%></td>
 			<td><%=pve.getParkingUserStartTime()%></td>
 			<td><%=pve.getParkingUserEndTime()%></td>

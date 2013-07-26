@@ -79,7 +79,7 @@
 			
 			<tr>
 				<td><%=currentStateForCar.getId()%></td>
-				<td><%=currentStateForCar.getParkingId()%></td>
+				<td><%=currentStateForCar.getParking().getId()%></td>
 				<td><%=currentStateForCar.getParkingUserCarNumber()%></td>
 				<td><%=currentStateForCar.getParkingUserStartTime()%></td>
 				<td><%=currentStateForCar.getParkingUserEndTime()%></td>

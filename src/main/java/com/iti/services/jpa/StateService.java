@@ -59,12 +59,12 @@ public class StateService {
 
 		ParkingCurrentState persistedParkingCurrentState = parkingCurrentStateDAO.getCurrentStateForCar(CarNumber);
 		if (persistedParkingCurrentState != null) {
-			int parkingId = persistedParkingCurrentState.getParkingId();
+			ParkingPlace parking = persistedParkingCurrentState.getParking();
 			String carNumber = persistedParkingCurrentState.getParkingUserCarNumber();
 			Date startDate = persistedParkingCurrentState.getParkingUserStartTime();
 			Date endDate = persistedParkingCurrentState.getParkingUserEndTime();
 
-			ParkingHistoricalState deleted = new ParkingHistoricalState(parkingId, carNumber, startDate, endDate);
+			ParkingHistoricalState deleted = new ParkingHistoricalState(parking.getId(), carNumber, startDate, endDate);
 
 			parkingCurrentStateDAO.delete(persistedParkingCurrentState);
 
@@ -72,7 +72,7 @@ public class StateService {
 			parkingHistoricalStateDAO.save(deleted);
 
 			// update parking places available slots
-			ParkingPlace parkingPlace = parkingPlaceDAO.findParkingPlaceById(parkingId);
+			ParkingPlace parkingPlace = parkingPlaceDAO.findParkingPlaceById(parking.getId());
 			parkingPlace.setParkingAvailableSlots(parkingPlace.getParkingAvailableSlots() + 1);
 			parkingPlaceDAO.save(parkingPlace);
 
@@ -144,13 +144,13 @@ public class StateService {
 			parkingCurrentStateDAO.save(parkingCurrentState);
 		} else {
 
-			ParkingCurrentState newParkingCurrentState = new ParkingCurrentState(parkingId, carNumber, startDate, untilDate);
-
-			parkingCurrentStateDAO.save(newParkingCurrentState);
-
 			ParkingPlace parkingPlace = parkingPlaceDAO.findParkingPlaceById(parkingId);
 			parkingPlace.setParkingAvailableSlots(parkingPlace.getParkingAvailableSlots() - 1);
 			parkingPlaceDAO.update(parkingPlace);
+			
+			ParkingCurrentState newParkingCurrentState = new ParkingCurrentState(parkingPlace, carNumber, startDate, untilDate);
+
+			parkingCurrentStateDAO.save(newParkingCurrentState);
 		}
 
 		// current state remover timer call

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,8 +35,8 @@ public class ParkingCurrentState implements Serializable {
 	@Column(unique = true, nullable = false)
 	private int id;
 
-	@Column(name = "parking_id", nullable = false)
-	private int parkingId;
+	@JoinColumn(name = "parking_id", referencedColumnName="id")
+	private ParkingPlace parking;
 
 	@Column(name = "parking_user_car_number", nullable = false, length = 45)
 	private String parkingUserCarNumber;
@@ -48,22 +49,20 @@ public class ParkingCurrentState implements Serializable {
 	@Column(name = "parking_user_start_time", nullable = false)
 	private Date parkingUserStartTime;
 
-	// private ParkingPlace parkingPlaceId;
-
 	public ParkingCurrentState() {
 	}
 
-	public ParkingCurrentState(int id, int parkingId, String userCarNumber, Date startDate, Date endDate) {
+	public ParkingCurrentState(int id, ParkingPlace parking, String userCarNumber, Date startDate, Date endDate) {
 		this.id = id;
-		this.parkingId = parkingId;
+		this.parking = parking;
 		this.parkingUserCarNumber = userCarNumber;
 		this.parkingUserStartTime = startDate;
 		this.parkingUserEndTime = endDate;
 	}
 
-	public ParkingCurrentState( int parkingId, String userCarNumber, Date startDate, Date endDate) {
+	public ParkingCurrentState( ParkingPlace parking, String userCarNumber, Date startDate, Date endDate) {
 		
-		this.parkingId = parkingId;
+		this.parking = parking;
 		this.parkingUserCarNumber = userCarNumber;
 		this.parkingUserStartTime = startDate;
 		this.parkingUserEndTime = endDate;
@@ -76,12 +75,12 @@ public class ParkingCurrentState implements Serializable {
 		this.id = id;
 	}
 
-	public int getParkingId() {
-		return this.parkingId;
+	public ParkingPlace getParking() {
+		return this.parking;
 	}
 
-	public void setParkingId(int parkingId) {
-		this.parkingId = parkingId;
+	public void setParking(ParkingPlace parking) {
+		this.parking = parking;
 	}
 
 	public String getParkingUserCarNumber() {
@@ -110,6 +109,6 @@ public class ParkingCurrentState implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ParkingCurrentState [id=" + id + ", parkingId=" + parkingId + ", parkingUserCarNumber=" + parkingUserCarNumber + ", parkingUserEndTime=" + parkingUserEndTime + ", parkingUserStartTime=" + parkingUserStartTime + "]";
+		return "ParkingCurrentState [id=" + id + ", parkingId=" + parking + ", parkingUserCarNumber=" + parkingUserCarNumber + ", parkingUserEndTime=" + parkingUserEndTime + ", parkingUserStartTime=" + parkingUserStartTime + "]";
 	}
 }
