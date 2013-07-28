@@ -21,8 +21,8 @@
 	height: 70%;
 	float: left;
 	max-width: none;
-}
-
+} s
+ 
 img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
 	max-width: none;
 }
