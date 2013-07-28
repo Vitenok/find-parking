@@ -1,10 +1,10 @@
 package com.iti.parking.dao.jpa;
 
-import com.iti.parking.entity.jpa.ParkingHistoricalState;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.iti.parking.entity.jpa.ParkingHistoricalState;
 
 public class ParkingHistoricalStateDAO extends GenericDAO<ParkingHistoricalState> {
 

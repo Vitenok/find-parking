@@ -8,10 +8,10 @@
 <head>
 <title>Mega Parking page</title>
 <link href="css/bootstrap.css" rel="stylesheet">
-	<script type="text/javascript">
-		<jsp:include page="js/jquery-2.0.3.min.js" />
-		<jsp:include page="js/bootstrap.js" />
-	</script>
+<script type="text/javascript">
+	<jsp:include page="js/jquery-2.0.3.min.js" />
+	<jsp:include page="js/bootstrap.js" />
+</script>
 
 </head>
 <body class="text-center" >

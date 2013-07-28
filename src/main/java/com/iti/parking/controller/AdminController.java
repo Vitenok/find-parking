@@ -14,8 +14,8 @@ import com.iti.parking.entity.jpa.ParkingCurrentState;
 import com.iti.parking.entity.jpa.ParkingHistoricalState;
 import com.iti.parking.entity.jpa.ParkingPlace;
 import com.iti.services.jpa.AdminService;
-import com.iti.services.jpa.StateService;
 import com.iti.services.jpa.ParkingPlaceService;
+import com.iti.services.jpa.StateService;
 
 @WebServlet(name = "AdminController", urlPatterns = { "/admin", "/admin/createAdmin", "/admin/deleteAdmin", "/admin/updateAdmin", "/admin/parking/createParking", "/admin/parking/deleteParking", "/admin/parking/updateParking" })
 public class AdminController extends HttpServlet {
@@ -60,9 +60,7 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("There are no admins with this ID");
 			}
-		}
-
-		else if ("/admin/updateAdmin".equals(servletPath)) {
+		} else if ("/admin/updateAdmin".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				String newLogin = request.getParameter("login");
@@ -72,9 +70,7 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Admin with this name already exists");
 			}
-		}
-
-		else if ("/admin/parking/createParking".equals(servletPath)) {
+		} else if ("/admin/parking/createParking".equals(servletPath)) {
 			try {
 				String address = request.getParameter("address");
 				int capacity = Integer.parseInt(request.getParameter("capacity"));
@@ -86,9 +82,7 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("Parking with this address already exists");
 			}
-		}
-
-		else if ("/admin/parking/deleteParking".equals(servletPath)) {
+		} else if ("/admin/parking/deleteParking".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				adminService.deleteParkingPlaceById(id);
@@ -96,9 +90,7 @@ public class AdminController extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().write("There are no parkings with this ID");
 			}
-		}
-
-		else if ("/admin/parking/updateParking".equals(servletPath)) {
+		} else if ("/admin/parking/updateParking".equals(servletPath)) {
 			try {
 				int id = Integer.parseInt(request.getParameter("entityId"));
 				String newAddress = request.getParameter("address");

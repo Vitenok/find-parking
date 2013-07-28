@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.iti.parking.entity.jpa.ParkingCurrentState;
-import com.iti.parking.entity.jpa.ParkingHistoricalState;
-import com.iti.parking.entity.jpa.ParkingPlace;
 import com.iti.parking.dao.jpa.ParkingCurrentStateDAO;
 import com.iti.parking.dao.jpa.ParkingHistoricalStateDAO;
 import com.iti.parking.dao.jpa.ParkingPlaceDAO;
+import com.iti.parking.entity.jpa.ParkingCurrentState;
+import com.iti.parking.entity.jpa.ParkingHistoricalState;
+import com.iti.parking.entity.jpa.ParkingPlace;
 
 public class StateService {
 

@@ -15,8 +15,6 @@ import com.iti.parking.entity.jpa.ParkingPlace;
 import com.iti.services.jpa.ParkingPlaceService;
 import com.iti.services.jpa.StateService;
 
-;
-
 @WebServlet(name = "AllPlacesController", urlPatterns = { "" })
 public class AllPlacesController extends HttpServlet {
 
@@ -32,9 +30,6 @@ public class AllPlacesController extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
 
 		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
 		request.setAttribute("tableRows", parkingViewer);

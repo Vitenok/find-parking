@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "parking_current_state")
 @NamedQueries(value = { 
-        @NamedQuery (name = "ParkingCurrentState.getAllBusySlotsByParkingId", query = "select p from ParkingCurrentState as p where p.parkingId =:parking_id "),
+        @NamedQuery (name = "ParkingCurrentState.getAllBusySlotsByParkingId", query = "select p from ParkingCurrentState as p where p.parking.id =:parking_id"),
 		@NamedQuery(name = "ParkingCurrentState.getStateForCar", query = "select p from ParkingCurrentState p where p.parkingUserCarNumber =:parking_user_car_number")
 })
 

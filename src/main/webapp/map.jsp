@@ -7,16 +7,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title></title>
-<link href="css/bootstrap.css" rel="stylesheet">
 
-<script type="text/javascript">
-		<jsp:include page="js/jquery-2.0.3.min.js" />
-		<jsp:include page="js/bootstrap.js" />
-	</script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">>
 
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta charset="utf-8">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+ 
 <style type="text/css">
 #map-canvas {
 	margin: 5;
@@ -37,10 +33,6 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
 	text-align: center;
 }
 </style>
-
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
-	</script>
 
 <script type="text/javascript">
 
@@ -182,9 +174,12 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
     function disableButton(element){
     	document.getElementById(element).disabled=true;
     }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+</script>
 </head>
+
 <body class="text-center">
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
