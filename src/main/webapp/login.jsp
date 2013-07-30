@@ -4,11 +4,11 @@
 <html>
 <head>
 
-<link href="css/bootstrap.css" rel="stylesheet">
-	<script type="text/javascript">
-		<jsp:include page="js/jquery-2.0.3.min.js" />
-		<jsp:include page="js/bootstrap.js" />
-	</script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
 	<style>
 		.style-form {

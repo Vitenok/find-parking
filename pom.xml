@@ -61,9 +61,25 @@
 			<version>4.2.2.Final</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<resources>
+            <resource>
+                <directory>src/main/resources/META-INF</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+	</build>
+	
 	<profiles>
 		<profile>
 			<id>local</id>
+			<properties>
+                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+                <jdbc.url>jdbc:mysql://localhost:3306/parkingD</jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>root</jdbc.password>
+            </properties>
 			<build>
 				<pluginManagement>
 					<plugins>
@@ -79,6 +95,7 @@
 				</pluginManagement>
 			</build>
 		</profile>
+		
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
 				invoking mvn. -->
@@ -87,7 +104,15 @@
 			<!-- By default that is to put the resulting archive into the 'webapps' 
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+			
 			<id>openshift</id>
+			<properties>
+                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+                <jdbc.url>jdbc:mysql://127.10.222.2:3306/</jdbc.url>
+                <jdbc.username>adminUW8Bas4</jdbc.username>
+                <jdbc.password>gF9dwJbk581B</jdbc.password>
+            </properties>
+			
 			<build>
 				<finalName>find-parking</finalName>
 				<plugins>

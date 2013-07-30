@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -35,7 +36,9 @@ public class ParkingCurrentState implements Serializable {
 	@Column(unique = true, nullable = false)
 	private int id;
 
-	@JoinColumn(name = "parking_id", referencedColumnName="id")
+	@ManyToOne
+	//@JoinColumn(name = "parking_id", referencedColumnName="id")
+	@JoinColumn(name = "parking_id")
 	private ParkingPlace parking;
 
 	@Column(name = "parking_user_car_number", nullable = false, length = 45)

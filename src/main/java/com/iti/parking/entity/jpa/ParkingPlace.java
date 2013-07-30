@@ -1,12 +1,14 @@
 package com.iti.parking.entity.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -14,9 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "parking_places")
-@NamedQueries(value = { @NamedQuery(name = "ParkingPlace.findAllParkingPlaces", query = "select p from ParkingPlace p"),
-						@NamedQuery(name = "ParkingPlace.findParkingPlaceById", query = "select p from ParkingPlace p where p.id =:id"), 
-						@NamedQuery(name = "ParkingPlace.findParkingPlaceByAddress", query = "select p from ParkingPlace p where p.parkingAddress =:parking_address") })
+@NamedQueries(value = { @NamedQuery(name = "ParkingPlace.findAllParkingPlaces", query = "select p from ParkingPlace p"), @NamedQuery(name = "ParkingPlace.findParkingPlaceById", query = "select p from ParkingPlace p where p.id =:id"), @NamedQuery(name = "ParkingPlace.findParkingPlaceByAddress", query = "select p from ParkingPlace p where p.parkingAddress =:parking_address") })
 public class ParkingPlace implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +36,12 @@ public class ParkingPlace implements Serializable {
 
 	@Column(name = "parking_capacity", nullable = false)
 	private int parkingCapacity;
+
+	@OneToMany(mappedBy = "parking")
+	private Collection<ParkingCurrentState> parkingCurrentState;
+
+	@OneToMany(mappedBy = "parkingH")
+	private Collection<ParkingHistoricalState> parkingHistoricalState;
 
 	public ParkingPlace() {
 	}

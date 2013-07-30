@@ -27,11 +27,12 @@ public class AdminController extends HttpServlet {
 	ParkingPlaceService parkingPlaceService = new ParkingPlaceService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
 		try {
-			request.setAttribute("CurrentParkingViewer", getAllBusySlots());
-			request.setAttribute("HistoricalParkingViewer", getAllUsedSlots());
-			request.setAttribute("AllParkingPlacesViewer", getAllParkingPlaces());
-			request.setAttribute("AllAdminsViewer", getAllAdmins());
+			request.setAttribute("currentParkingViewer", getAllBusySlots());
+			request.setAttribute("historicalParkingViewer", getAllUsedSlots());
+			request.setAttribute("allParkingPlacesViewer", parkingViewer);
+			request.setAttribute("allAdminsViewer", getAllAdmins());
 		} catch (Exception e) {
 			request.setAttribute("errorMsg1", "Can't get parking data. Please try again later");
 		}
@@ -115,8 +116,10 @@ public class AdminController extends HttpServlet {
 	private List<Admin> getAllAdmins() {
 		return adminService.getAllAdmins();
 	}
-
-	private List<ParkingPlace> getAllParkingPlaces() {
-		return parkingPlaceService.findAllParkingPlaces();
-	}
+	
+	/**
+	 * private List<ParkingPlace> getAllParkingPlaces() {
+			return parkingPlaceService.findAllParkingPlaces();
+	   }
+	 **/
 }

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.iti.parking.entity.jpa.Admin;
-
 /**
  * Servlet implementation class AdminLogoutController
  */
@@ -23,15 +21,10 @@ public class AdminLogoutController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			Admin admin = (Admin) session.getAttribute("admin");
-			if (admin != null) {
-				session.removeAttribute("admin");
-				System.out.println("admin was removed from session:" + admin);
-			}
-			request.getRequestDispatcher("").forward(request, response);
-		}
+		HttpSession session = request.getSession();
+		session.removeAttribute("adminId");
+		response.sendRedirect("");
+//		request.getRequestDispatcher("").forward(request, response);
 	}
 
 }

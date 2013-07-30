@@ -25,25 +25,24 @@ public class AllPlacesController extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
-		request.setAttribute("tableRows", parkingViewer);
-		request.getRequestDispatcher("map.jsp").forward(request, response);
+		request.setAttribute("allParkingPlacesViewer", parkingViewer);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		List<ParkingPlace> parkingViewer = new ParkingPlaceService().findAllParkingPlaces();
-		request.setAttribute("tableRows", parkingViewer);
+		request.setAttribute("allParkingPlacesViewer", parkingViewer);
 
 		String userCarNumber = request.getParameter("carNumber");
 		if (userCarNumber != null && !userCarNumber.isEmpty()) {
-			// request.setAttribute("action", "");
 			ParkingCurrentState parkingCurrentState = stateService.getStateForCar(userCarNumber);
 			List<ParkingHistoricalState> parkingHistoricalState = stateService.getUsedSlotsByCar(userCarNumber);
 			request.setAttribute("currentStateForCar", parkingCurrentState);
 			request.setAttribute("historicalStateForCar", parkingHistoricalState);
 
 		}
-		request.getRequestDispatcher("map.jsp").forward(request, response);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 }

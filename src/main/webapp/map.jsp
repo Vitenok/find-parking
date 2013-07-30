@@ -1,18 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.iti.parking.entity.jpa.ParkingPlace"%>
-<%@ page import="com.iti.parking.entity.jpa.ParkingCurrentState"%>
-<%@ page import="com.iti.parking.entity.jpa.ParkingHistoricalState"%>
-<%@ page import="com.iti.services.jpa.ParkingPlaceService"%>
 <html>
-<head>
+<head> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
- 
+
 <style type="text/css">
 #map-canvas {
 	margin: 5;
@@ -21,16 +18,16 @@
 	height: 70%;
 	float: left;
 	max-width: none;
-} s
+} 
  
 img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
 	max-width: none;
 }
-
-#button {
-	margin: auto;
-	clear: both;
-	text-align: center;
+#directionsPanel{
+	float: right; 
+	width: 28%; 
+	height: 70%; 
+	overflow: auto
 }
 </style>
 
@@ -45,7 +42,7 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
 
 	function initialize() {
         var mapOptions = {
-          zoom: 11,
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -56,12 +53,15 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
         google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
           computeTotalDistance(directionsDisplay.directions);
         });
+        
+        var infowindow = new google.maps.InfoWindow({
+        });
 		
         //show my current location
         showMyLocation(map);
      	
 		//show all parkings
-		showAllParkings(map);
+		showAllParkings(map,infowindow);
 		 
       } //end initialize
       
@@ -75,9 +75,7 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
                 position: pos,
                 map: map,
                 title: 'Your current location',
-                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
             });
-        
             map.setCenter(pos);
           }, function() {
             handleNoGeolocation(true);
@@ -89,7 +87,7 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
       	}
     }
     
-    function showAllParkings(map){
+    function showAllParkings(map, infowindow){
      	// Showing all parkings on the map
      	geocoder = new google.maps.Geocoder();
      	//current location
@@ -97,7 +95,7 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
         	pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
      	});
      	<%
-			List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("tableRows");
+			List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("allParkingPlacesViewer");
 				if (allParkingPlacesViewer != null) {
 					for (ParkingPlace pve : allParkingPlacesViewer) {
 		%>
@@ -106,8 +104,7 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
             if (status == google.maps.GeocoderStatus.OK) {
             	
               map.setCenter(results[0].geometry.location);
-              
-            
+  
               var contentString = "<br>" 
               +"<h5>"
               +"<%=pve.getParkingAddress()%>"
@@ -120,20 +117,31 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
               +"<div id='get-direction-button'><br>"
               +"<input type='button' id='get-direction-button' value='Get direction' class='btn' onclick='calulateRoute( pos, \"<%=pve.getParkingAddress()%>\")'  >"  
               +"</div>";
+             
+              if ('<%=pve.getParkingAvailableSlots()%>' >= 10){
+              	var parkingAvailableSlotsMarker = new google.maps.Marker({
+                 	 map: map, 
+                  	 position: results[0].geometry.location,
+                  	 title: "Number of available slots on" + "\n" + "<%=pve.getParkingAddress()%>",
+                  	 icon: 'http://google-maps-icons.googlecode.com/files/black' + '<%=pve.getParkingAvailableSlots()%>' + '.png'
+                  		 
+                  		
+                  
+                });
+              } else {
+            	  var parkingAvailableSlotsMarker = new google.maps.Marker({
+                  	 map: map, 
+                   	 position: results[0].geometry.location,
+                     title: "Number of available slots on" + "\n" + "<%=pve.getParkingAddress()%>",
+                   	 icon: 'http://google-maps-icons.googlecode.com/files/black' + 0 + '<%=pve.getParkingAvailableSlots()%>' + '.png'
+                 });
+              }
               
-              var infowindow = new google.maps.InfoWindow({
-                  content: contentString,
-              });
+             
               
-              var parkingMarker = new google.maps.Marker({
-                  map: map, 
-                  position: results[0].geometry.location,
-                  title: '<%=pve.getParkingAddress()%>'
-              });
-     
-              google.maps.event.addListener(parkingMarker, 'click', function() {
-            	  infowindow.open(map, parkingMarker);
-  			  		
+              google.maps.event.addListener(parkingAvailableSlotsMarker, 'click', function() {
+            	  infowindow.setContent(contentString);
+            	  infowindow.open(map, parkingAvailableSlotsMarker);
   			  });
               
             } else {
@@ -181,32 +189,13 @@ img[src*="gstatic.com/"],img[src*="googleapis.com/"] {
 </head>
 
 <body class="text-center">
-	<div class="navbar navbar-inverse">
-		<div class="navbar-inner">
-			<div class="container">
-				<h1>Home page</h1>
-			</div>
-		</div>
-	</div>
-
 	<div id="map-canvas" ></div>
-	<div id="directionsPanel" style="float: right; width: 28%; height: 50%">
+	<div id="directionsPanel">
 		<p>
 			Total Distance: <span id="total"></span>
 		</p>
 	</div>
 	<br>
 	<p>
-	<div id="button">
-		<form method="POST" action="${action}">
-			<fieldset>
-				<label>Enter car number here to check your data:</label> <input
-					type="text" name="carNumber" placeholder="Type here..."> <span
-					class="help-block"></span>
-				<button type="submit" class="btn">Submit</button>
-			</fieldset>
-		</form>
-	</div>
- 	
 </body>
 </html>

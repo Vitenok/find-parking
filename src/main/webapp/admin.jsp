@@ -5,13 +5,13 @@
 <%@ page import="com.iti.parking.entity.jpa.ParkingPlace"%>
 <%@ page import="com.iti.parking.entity.jpa.Admin"%>
 <head>
-	<title>Admin page</title>
+<title>Admin page</title>
 	
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<script type="text/javascript">
-		<jsp:include page="js/jquery-2.0.3.min.js" />
-		<jsp:include page="js/bootstrap.js" />
-	</script>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 
@@ -178,8 +178,9 @@
    		</div> 
    </div>	
    
-	
-	
+	<script type="text/javascript">
+		<jsp:include page="map.jsp"/>
+	</script>
 	
 	<table class="table table-bordered" >
 		<thead>
@@ -191,10 +192,10 @@
 				<th>Parking available slots</th>
 				<th>Actions</th>
 			</tr>
-		</thead>
+		
 			<tbody>
 				<%
-				List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("AllParkingPlacesViewer");
+				List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("allParkingPlacesViewer");
 				if (allParkingPlacesViewer != null) {
 					for (ParkingPlace pve : allParkingPlacesViewer) {
 				%>
@@ -223,18 +224,20 @@
 		<tr>
 			<th>ID</th>
 			<th>Parking ID</th>
+			<th>Parking address</th>
 			<th>User Car Number</th>
 			<th>Start Time</th>
 			<th>End Time</th>
 		</tr>
 		<%
-			List<ParkingCurrentState> currentParkingViewer = (List<ParkingCurrentState>) request.getAttribute("CurrentParkingViewer");
+			List<ParkingCurrentState> currentParkingViewer = (List<ParkingCurrentState>) request.getAttribute("currentParkingViewer");
 			if (currentParkingViewer != null) {
 				for (ParkingCurrentState pve : currentParkingViewer) {
 		%>
 		<tr>
 			<td><%=pve.getId()%></td>
 			<td><%=pve.getParking().getId()%></td>
+			<td><%=pve.getParking().getParkingAddress()%></td>
 			<td><%=pve.getParkingUserCarNumber()%></td>
 			<td><%=pve.getParkingUserStartTime()%></td>
 			<td><%=pve.getParkingUserEndTime()%></td>
@@ -251,19 +254,21 @@
 		<tr>
 			<th>ID</th>
 			<th>Parking ID</th>
+			<th>Parking address</th>
 			<th>User Car Number</th>
 			<th>Start Time</th>
 			<th>End Time</th>
 
 		</tr>
 		<%
-			List<ParkingHistoricalState> historicalParkingViewer = (List<ParkingHistoricalState>) request.getAttribute("HistoricalParkingViewer");
+			List<ParkingHistoricalState> historicalParkingViewer = (List<ParkingHistoricalState>) request.getAttribute("historicalParkingViewer");
 			if (historicalParkingViewer != null) {
 				for (ParkingHistoricalState pve : historicalParkingViewer) {
 		%>
 		<tr>
 			<td><%=pve.getId()%></td>
-			<td><%=pve.getParkingId()%></td>
+			<td><%=pve.getParking().getId()%></td>
+			<td><%=pve.getParking().getParkingAddress()%></td>
 			<td><%=pve.getParkingUserCarNumber()%></td>
 			<td><%=pve.getParkingUserStartTime()%></td>
 			<td><%=pve.getParkingUserEndTime()%></td>
@@ -323,20 +328,6 @@
 		</div>
 	</div>
 	
-	<!--   NOT NEEDED CODE	
-	<div id="dialog-delete-admin" class="modal hide fade" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="doWeNeedIt" aria-hidden="true">
-	<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3>Deleting admin</h3>
-	    </div>
-		<div class="modal-body">
-			Are you sure you want to permanently delete this admin?
-		</div>
-		<div class="modal-footer">
-   			<button class="btn" id="delete-admin-button">Delete</button>	
-  		</div>
-	</div>  -->
-	
 	<!--  CREATE AND UPDATE ADMIN DIALOG FORM HERE -->	
 	<div id="dialog-admin" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="doWeNeedIt" aria-hidden="true">
 			<div class="modal-header">
@@ -381,7 +372,7 @@
 				</thead>
 				<tbody>
 					<%
-						List<Admin> allAdminsViewer = (List<Admin>) request.getAttribute("AllAdminsViewer");
+						List<Admin> allAdminsViewer = (List<Admin>) request.getAttribute("allAdminsViewer");
 						if (allAdminsViewer != null) {
 							for (Admin pve : allAdminsViewer) {
 					%>

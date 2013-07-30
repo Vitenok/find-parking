@@ -32,7 +32,6 @@ public class AdminLoginFilter implements Filter {
 			chain.doFilter(request, response);
 		} else {
 			// Go to AdminLoginController
-			request.setAttribute("errorMsg", "You are not logged in!");
 			httpRequest.getRequestDispatcher("/adminLogin").forward(request, response);
 		}
 	}

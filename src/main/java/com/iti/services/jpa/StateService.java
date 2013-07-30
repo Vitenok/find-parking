@@ -64,7 +64,7 @@ public class StateService {
 			Date startDate = persistedParkingCurrentState.getParkingUserStartTime();
 			Date endDate = persistedParkingCurrentState.getParkingUserEndTime();
 
-			ParkingHistoricalState deleted = new ParkingHistoricalState(parking.getId(), carNumber, startDate, endDate);
+			ParkingHistoricalState deleted = new ParkingHistoricalState( parking, carNumber, startDate, endDate);
 
 			parkingCurrentStateDAO.delete(persistedParkingCurrentState);
 

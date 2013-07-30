@@ -33,8 +33,6 @@ public class Admin implements java.io.Serializable {
 	@Column(name = "password")
 	private String password;
 
-	// @Enumerated(EnumType.STRING)
-	// private Role role;
 
 	public Admin() {
 	}

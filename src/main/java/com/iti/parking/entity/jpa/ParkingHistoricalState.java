@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,7 +21,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "parking_historical_state")
 @NamedQueries(value = { @NamedQuery(name = "ParkingHistoricalState.getUsedSlotsByCarNumber", query = "select p from ParkingHistoricalState p where p.parkingUserCarNumber =:parking_user_car_number"),
-                        @NamedQuery(name = "ParkingHistoricalState.getAllUsedSlotsByParkingId", query = "select p from ParkingHistoricalState p where p.parkingId =:parking_id")
+                        @NamedQuery(name = "ParkingHistoricalState.getAllUsedSlotsByParkingId", query = "select p from ParkingCurrentState as p where p.parking.id =:parking_id")
 })
 
 public class ParkingHistoricalState implements Serializable {
@@ -32,8 +34,14 @@ public class ParkingHistoricalState implements Serializable {
 	@Column(unique = true, nullable = false)
 	private int id;
 
+	@ManyToOne
+	//@JoinColumn(name = "parking_id", referencedColumnName="id")
+	@JoinColumn(name = "parking_id")
+	private ParkingPlace parkingH;
+	
+	/**
 	@Column(name = "parking_id", nullable = false)
-	private int parkingId;
+	private int parkingId; **/
 
 	@Column(name = "parking_user_car_number", nullable = false, length = 45)
 	private String parkingUserCarNumber;
@@ -49,17 +57,17 @@ public class ParkingHistoricalState implements Serializable {
 	public ParkingHistoricalState() {
 	}
 
-	public ParkingHistoricalState(int id, int parkingId, String carNumber, Date startDate, Date endDate) {
+	public ParkingHistoricalState(int id, ParkingPlace parking, String carNumber, Date startDate, Date endDate) {
 		this.id = id;
-		this.parkingId = parkingId;
+		this.parkingH = parking;
 		this.parkingUserCarNumber = carNumber;
 		this.parkingUserStartTime = startDate;
 		this.parkingUserEndTime = endDate;
 	}
 
-	public ParkingHistoricalState( int parkingId, String carNumber, Date startDate, Date endDate) {
+	public ParkingHistoricalState( ParkingPlace parking, String carNumber, Date startDate, Date endDate) {
 		
-		this.parkingId = parkingId;
+		this.parkingH = parking;
 		this.parkingUserCarNumber = carNumber;
 		this.parkingUserStartTime = startDate;
 		this.parkingUserEndTime = endDate;
@@ -72,12 +80,12 @@ public class ParkingHistoricalState implements Serializable {
 		this.id = id;
 	}
 
-	public int getParkingId() {
-		return this.parkingId;
+	public ParkingPlace getParking() {
+		return this.parkingH;
 	}
 
-	public void setParkingId(int parkingId) {
-		this.parkingId = parkingId;
+	public void setParking(ParkingPlace parking) {
+		this.parkingH = parking;
 	}
 
 	public String getParkingUserCarNumber() {
@@ -106,7 +114,7 @@ public class ParkingHistoricalState implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ParkingHistoricalState [id=" + id + ", parkingId=" + parkingId + ", parkingUserCarNumber=" + parkingUserCarNumber + ", parkingUserEndTime=" + parkingUserEndTime + ", parkingUserStartTime=" + parkingUserStartTime + "]";
+		return "ParkingHistoricalState [id=" + id + ", parking=" + parkingH + ", parkingUserCarNumber=" + parkingUserCarNumber + ", parkingUserEndTime=" + parkingUserEndTime + ", parkingUserStartTime=" + parkingUserStartTime + "]";
 	}
 
 }
