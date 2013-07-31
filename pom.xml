@@ -65,7 +65,7 @@
 	<build>
 		<resources>
             <resource>
-                <directory>src/main/resources/META-INF</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -76,7 +76,7 @@
 			<id>local</id>
 			<properties>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/parkingD</jdbc.url>
+                <jdbc.url>jdbc:mysql://localhost:3306/parking</jdbc.url>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>root</jdbc.password>
             </properties>
@@ -108,7 +108,7 @@
 			<id>openshift</id>
 			<properties>
                 <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://127.10.222.2:3306/</jdbc.url>
+                <jdbc.url>jdbc:mysql://127.10.222.2:3306/parking</jdbc.url>
                 <jdbc.username>adminUW8Bas4</jdbc.username>
                 <jdbc.password>gF9dwJbk581B</jdbc.password>
             </properties>
