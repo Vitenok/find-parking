@@ -33,8 +33,8 @@
 	</pluginRepositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,26 +60,37 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.2.2.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.2.8</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
+		<finalName>find-parking</finalName>
 		<resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
-	
+
 	<profiles>
 		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<id>local</id>
 			<properties>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://localhost:3306/parking</jdbc.url>
-                <jdbc.username>root</jdbc.username>
-                <jdbc.password>root</jdbc.password>
-            </properties>
+				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+				<jdbc.url>jdbc:mysql://localhost:3306/parking</jdbc.url>
+				<jdbc.username>root</jdbc.username>
+				<jdbc.password>root</jdbc.password>
+				<endpointURL>http://localhost:8080/services/emulator</endpointURL>
+			</properties>
 			<build>
 				<pluginManagement>
 					<plugins>
@@ -95,7 +106,7 @@
 				</pluginManagement>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
 				invoking mvn. -->
@@ -104,17 +115,17 @@
 			<!-- By default that is to put the resulting archive into the 'webapps' 
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			
+
 			<id>openshift</id>
 			<properties>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>jdbc:mysql://127.10.222.2:3306/parking</jdbc.url>
-                <jdbc.username>adminUW8Bas4</jdbc.username>
-                <jdbc.password>gF9dwJbk581B</jdbc.password>
-            </properties>
-			
+				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+				<jdbc.url>jdbc:mysql://127.10.222.2:3306/parking</jdbc.url>
+				<jdbc.username>adminUW8Bas4</jdbc.username>
+				<jdbc.password>gF9dwJbk581B</jdbc.password>
+				<endpointURL>http://?</endpointURL>
+			</properties>
+
 			<build>
-				<finalName>find-parking</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
