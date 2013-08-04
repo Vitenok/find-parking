@@ -39,9 +39,8 @@ public class AdminLoginController extends HttpServlet {
 			Admin admin = adminService.isValidLogin(login, password);
 			if (admin != null) {
 				session.setAttribute("adminId", admin.getId());
-				response.sendRedirect("/admin");
+				response.sendRedirect(request.getContextPath()+"/admin");
 			} else {
-				request.setAttribute("errorMsg", "Invalid login or password");
 				request.getRequestDispatcher("adminLogin.jsp").forward(request, response);
 			}
 		}

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+7<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.iti.parking.entity.jpa.ParkingCurrentState"%>
 <%@ page import="com.iti.parking.entity.jpa.ParkingHistoricalState"%>
@@ -6,12 +7,16 @@
 <%@ page import="com.iti.parking.entity.jpa.Admin"%>
 <head>
 <title>Admin page</title>
-	
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+<link
+	href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+	rel="stylesheet">
 
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 
@@ -32,6 +37,9 @@
 	
 	//Remove Parking
 	function prepareRemoveDialog(action, entityId, entityName1, entityName2) {  //entityName1 == "XXX";  entityName2 == "XXX/"
+	
+		$('#delete-button').unbind();
+	
 		$('#dialog-delete').modal();
 		$("#dialog-delete-title").text(action.substr(0,1).toUpperCase()+action.substr(1) + " " + entityName1);  
 		
@@ -52,7 +60,9 @@
 	
 
 	//Create and update Parking 
-	function prepareCreateUpdateParkingDialog(action, entityId, address, capacity, slots) {
+	function prepareCreateUpdateParkingDialog(action, address, capacity, slots, entityId) {
+		
+		$('#parking-button').unbind();
 		
 		$('#dialog-parking').modal();
 		
@@ -106,16 +116,16 @@
 				showErrorMessageFor($('#address'), 'Parking with this address already exists');
 			});
 	    });
-	}	
-
+	}
+	
 	//Create and update Admin
-	function prepareCreateUpdateAdminDialog(action, entityId, login, pass, confirmedPass) {
+	function prepareCreateUpdateAdminDialog(action, login, entityId) {
+		
+		$('#admin-button').unbind();
 		
 		$('#dialog-admin').modal();
-			
+		
 		$('#login').val(login);
-		$('#password').val(pass);
-		$('#confirm-password').val(confirmedPass);
 							
 		$("#dialog-admin-title").text(action.substr(0,1).toUpperCase()+action.substr(1)+' Admin');
 		
@@ -164,61 +174,67 @@
 	</script>
 </head>
 <body class="text-center">
-	
+
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-     			<h1>Admin page</h1>
-     			<div id="users-contain">
-					<form method="POST" action="${pageContext.request.contextPath}/adminLogout" style="text-align:right">
+				<h1>Admin page</h1>
+				<div id="users-contain">
+					<form method="POST"
+						action="${pageContext.request.contextPath}/adminLogout"
+						style="text-align: right">
 						<input type="submit" value="Logout" class="btn">
 					</form>
 				</div>
-    	    </div>
-   		</div> 
-   </div>	
-   
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 		<jsp:include page="map.jsp"/>
 	</script>
-	
-	<table class="table table-bordered" >
+
+	<table class="table table-bordered">
 		<thead>
-			<caption><h3>All Parking Places</h3></caption>
-			<tr>
-				<th>ID</th>
-				<th>Parking address</th>
-				<th>Parking capacity</th>
-				<th>Parking available slots</th>
-				<th>Actions</th>
-			</tr>
-		
-			<tbody>
-				<%
+		<caption>
+			<h3>All Parking Places</h3>
+		</caption>
+		<tr>
+			<th>ID</th>
+			<th>Parking address</th>
+			<th>Parking capacity</th>
+			<th>Parking available slots</th>
+			<th>Actions</th>
+		</tr>
+
+		<tbody>
+			<%
 				List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("allParkingPlacesViewer");
 				if (allParkingPlacesViewer != null) {
 					for (ParkingPlace pve : allParkingPlacesViewer) {
-				%>
-				<tr>
-					<td><%=pve.getId()%></td>
-					<td><%=pve.getParkingAddress()%></td>
-					<td><%=pve.getParkingCapacity()%></td>
-					<td><%=pve.getParkingAvailableSlots()%></td>
-					<td>
-						<button id="update-parking" class="btn" value="<%=pve.getId()%>" onclick="prepareCreateUpdateParkingDialog('update','<%=pve.getId()%>', '<%=pve.getParkingAddress()%>', '<%=pve.getParkingCapacity()%>', '<%=pve.getParkingAvailableSlots()%>')">Update</button>
-						<button id="delete-parking" class="btn" value="<%=pve.getId()%>" onclick="prepareRemoveDialog('delete', '<%=pve.getId()%>', 'parking', 'parking/')">Delete</button>
-					</td>
-				</tr>
-				<%
-					}
+			%>
+			<tr>
+				<td><%=pve.getId()%></td>
+				<td><%=pve.getParkingAddress()%></td>
+				<td><%=pve.getParkingCapacity()%></td>
+				<td><%=pve.getParkingAvailableSlots()%></td>
+				<td>
+					<button id="update-parking" class="btn" value="<%=pve.getId()%>" onclick="prepareCreateUpdateParkingDialog('update', '<%=pve.getParkingAddress()%>', '<%=pve.getParkingCapacity()%>', '<%=pve.getParkingAvailableSlots()%>', '<%=pve.getId()%>')">Update</button>
+					<button id="delete-parking" class="btn" value="<%=pve.getId()%>" onclick="prepareRemoveDialog('delete', '<%=pve.getId()%>', 'parking', 'parking/')">Delete</button>
+				</td>
+			</tr>
+			<%
 				}
-				%>
-			</tbody>
+				}
+			%>
+		</tbody>
 	</table>
-	<button id="create-parking" class="btn"  onclick="prepareCreateUpdateParkingDialog('create','','','','')">Create new parking place</button>
-	
-	
-	
+	<button id="create-parking" class="btn"
+		onclick="prepareCreateUpdateParkingDialog('create','','','','')">Create
+		new parking place</button>
+
+
+
 	<h3>Current Parking State</h3>
 	<table class="table table-bordered">
 		<tr>
@@ -243,12 +259,12 @@
 			<td><%=pve.getParkingUserEndTime()%></td>
 		</tr>
 		<%
-				}
+			}
 			}
 		%>
 
 	</table>
-		
+
 	<h3>Archived Parking State</h3>
 	<table class="table table-bordered">
 		<tr>
@@ -274,124 +290,127 @@
 			<td><%=pve.getParkingUserEndTime()%></td>
 		</tr>
 		<%
-				}
+			}
 			}
 		%>
 	</table>
-	
-	
-	<!--  CREATE AND UPDATE PARKING DIALOG FORM HERE -->	
-	<div id="dialog-parking" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="doWeNeedIt" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    	<h3 id="dialog-parking-title"></h3>
-		    	<p>All form fields are required</p>
-	    	</div>
-	    	<div class="modal-body">
-	    		<form class="form-horizontal" id="updateParking" name="updateParking">
-	    			<div class="control-group">
-						<label class="control-label" for="address">Address:</label>
-						<div class="controls">
-	 						<input type="text" name="address" id="address" class="text ui-widget-content ui-corner-all" >
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="capacity">Capacity:</label>
-						<div class="controls">
-	 						<input type="text" name="capacity" id="capacity" class="text ui-widget-content ui-corner-all" >
-						</div>
-					</div>
-					<div class="control-group">	
-						<label class="control-label" for="slots">Available slots:</label>
-						<div class="controls">
-	 						<input type="text" name="slots" id="slots" class="text ui-widget-content ui-corner-all">
-						</div>
-					</div>	
-				</form>
-			</div>
-			<div class="modal-footer">
-					<button class="btn" type="submit" id="parking-button">Save</button>	
-			</div>
-	</div>
-	
-	<!--  DELETE PARKING DIALOG FORM HERE -->
-	<div id="dialog-delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="doWeNeedIt" aria-hidden="true">
+
+
+	<!--  CREATE AND UPDATE PARKING DIALOG FORM HERE -->
+	<div id="dialog-parking" class="modal hide fade" tabindex="-1" role="dialog">
 		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h3 id ="dialog-delete-title"></h3>
-	    </div>
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 id="dialog-parking-title"></h3>
+			<p>All form fields are required</p>
+		</div>
 		<div class="modal-body">
-			Are you sure you want to permanently delete this item?
+			<form class="form-horizontal" id="updateParking" name="updateParking">
+				<div class="control-group">
+					<label class="control-label" for="address">Address:</label>
+					<div class="controls">
+						<input type="text" name="address" id="address"
+							class="text ui-widget-content ui-corner-all">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="capacity">Capacity:</label>
+					<div class="controls">
+						<input type="text" name="capacity" id="capacity"
+							class="text ui-widget-content ui-corner-all">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slots">Available slots:</label>
+					<div class="controls">
+						<input type="text" name="slots" id="slots"
+							class="text ui-widget-content ui-corner-all">
+					</div>
+				</div>
+			</form>
 		</div>
 		<div class="modal-footer">
-   			<button class="btn" id="delete-button">Delete</button>	
+			<button class="btn" type="submit" id="parking-button">Save</button>
 		</div>
 	</div>
-	
-	<!--  CREATE AND UPDATE ADMIN DIALOG FORM HERE -->	
-	<div id="dialog-admin" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="doWeNeedIt" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="dialog-admin-close">&times;</button>
-		    	<h3 id="dialog-admin-title"></h3>
-		    	<p>All form fields are required</p>
-	    	</div>
-	    	<div class="modal-body">
-	    		<form class="form-horizontal" id="updateAdmin" name="updateAdmin">
-	    			<div class="control-group">
-						<label class="control-label" for="login">Login:</label>
-						<div class="controls">
-	 						<input type="text" name="login" id="login" >
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="password">Password:</label>
-						<div class="controls">
-	 						<input type="password" name="password" id="password" >
-						</div>
-					</div>
-					<div class="control-group">	
-						<label class="control-label" for="confirm-password">Confirm password:</label>
-						<div class="controls">
-	 						<input type="password" name="confirm-password" id="confirm-password">
-						</div>
-					</div>	
-				</form>
-			</div>
-			<div class="modal-footer">
-					<button class="btn" type="submit" id="admin-button">Save</button>	
-			</div>
-	</div>
-		
-		<h3>All Admins</h3>
-		<table class="table table-bordered"> 
-				<thead>
-					<tr>
-						<th>Admin Name</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						List<Admin> allAdminsViewer = (List<Admin>) request.getAttribute("allAdminsViewer");
-						if (allAdminsViewer != null) {
-							for (Admin pve : allAdminsViewer) {
-					%>
-	
-					<tr>
-						<td><%=pve.getName()%></td>
-						<td>
-							<button id="update-admin" class="btn" value="<%=pve.getId()%>" onclick="prepareCreateUpdateAdminDialog('update','<%=pve.getId()%>', '<%=pve.getName()%>', '', '')" >Update</button>
-							<button id="delete-admin" class="btn" value="<%=pve.getId()%>" onclick="prepareRemoveDialog('delete', '<%=pve.getId()%>', 'admin', '')">Delete</button> 
-						</td>
-					</tr>
-					<%
-							}
-						}
-					%>
-				</tbody>
-		</table>
-	
-	<button id="create-admin" class="btn" onclick="prepareCreateUpdateAdminDialog('create','','','','')">Create new admin</button>
 
+	<!--  DELETE PARKING DIALOG FORM HERE -->
+	<div id="dialog-delete" class="modal hide fade" tabindex="-1" role="dialog" >
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">&times;</button>
+			<h3 id="dialog-delete-title"></h3>
+		</div>
+		<div class="modal-body">Are you sure you want to permanently
+			delete this item?</div>
+		<div class="modal-footer">
+			<button class="btn" id="delete-button">Delete</button>
+		</div>
+	</div>
+
+	<!--  CREATE AND UPDATE ADMIN DIALOG FORM HERE -->
+	<div id="dialog-admin" class="modal hide fade" tabindex="-1" role="dialog">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3 id="dialog-admin-title"></h3>
+			<p>All form fields are required</p>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" id="updateAdmin" name="updateAdmin">
+				<div class="control-group">
+					<label class="control-label" for="login">Login:</label>
+					<div class="controls">
+						<input type="text" name="login" id="login">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password">Password:</label>
+					<div class="controls">
+						<input type="password" name="password" id="password">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="confirm-password">Confirm password:</label>
+					<div class="controls">
+						<input type="password" name="confirm-password" id="confirm-password">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" type="submit" id="admin-button">Save</button>
+		</div>
+	</div>
+
+	<h3>All Admins</h3>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Admin Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+				List<Admin> allAdminsViewer = (List<Admin>) request.getAttribute("allAdminsViewer");
+				if (allAdminsViewer != null) {
+					for (Admin pve : allAdminsViewer) {
+			%>
+
+			<tr>
+				<td><%=pve.getName()%></td>
+				<td>
+					<button id="update-admin" class="btn" value="<%=pve.getId()%>" onclick="prepareCreateUpdateAdminDialog('update', '<%=pve.getName()%>' ,'<%=pve.getId()%>')">Update</button>
+					<button id="delete-admin" class="btn" value="<%=pve.getId()%>" onclick="prepareRemoveDialog('delete', '<%=pve.getId()%>', 'admin', '')">Delete</button>
+				</td>
+			</tr>
+			<%
+				}
+				}
+			%>
+		</tbody>
+	</table>
+
+	<button id="create-admin" class="btn" onclick="prepareCreateUpdateAdminDialog('create','','')">Create new admin</button>
 </body>
 </html>

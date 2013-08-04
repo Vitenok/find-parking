@@ -1,7 +1,6 @@
 
 package com.iti.parking.ws.client.generated;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -17,7 +16,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "ParkingOrderEmulatorWebServiceService", targetNamespace = "http://server.ws.parking.iti.com/", wsdlLocation = "http://localhost:8080/services/emulator?wsdl")
+@WebServiceClient(name = "ParkingOrderEmulatorWebServiceService", targetNamespace = "http://server.ws.parking.iti.com/", wsdlLocation = "ParkingOrderEmulatorWebServiceService.wsdl")
 public class ParkingOrderEmulatorWebServiceService
     extends Service
 {
@@ -29,11 +28,8 @@ public class ParkingOrderEmulatorWebServiceService
     static {
         URL url = null;
         WebServiceException e = null;
-        try {
-            url = new URL("http://localhost:8080/services/emulator?wsdl");
-        } catch (MalformedURLException ex) {
-            e = new WebServiceException(ex);
-        }
+        url = ParkingOrderEmulatorWebServiceService.class.getClassLoader().getResource("ParkingOrderEmulatorWebServiceService.wsdl");
+		//url = new URL("http://localhost:8080/services/emulator?wsdl");
         PARKINGORDEREMULATORWEBSERVICESERVICE_WSDL_LOCATION = url;
         PARKINGORDEREMULATORWEBSERVICESERVICE_EXCEPTION = e;
     }
