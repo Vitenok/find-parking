@@ -1,4 +1,4 @@
-package com.iti.services.jpa;
+package com.iti.services;
 
 import java.util.List;
 

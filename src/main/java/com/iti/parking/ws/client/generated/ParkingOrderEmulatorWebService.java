@@ -34,12 +34,12 @@ public interface ParkingOrderEmulatorWebService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "placeOrder", targetNamespace = "http://server.ws.parking.iti.com/", className = "com.iti.parking.ws.client.generated.PlaceOrder")// tuta nado
+    @RequestWrapper(localName = "placeOrder", targetNamespace = "http://server.ws.parking.iti.com/", className = "com.iti.parking.ws.client.generated.PlaceOrder")
     @ResponseWrapper(localName = "placeOrderResponse", targetNamespace = "http://server.ws.parking.iti.com/", className = "com.iti.parking.ws.client.generated.PlaceOrderResponse")
     @Action(input = "http://server.ws.parking.iti.com/ParkingOrderEmulatorWebService/placeOrderRequest", output = "http://server.ws.parking.iti.com/ParkingOrderEmulatorWebService/placeOrderResponse")
     public String placeOrder(
         @WebParam(name = "arg0", targetNamespace = "")
-        int arg0,
+        String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         int arg1,
         @WebParam(name = "arg2", targetNamespace = "")

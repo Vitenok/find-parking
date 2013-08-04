@@ -1,6 +1,5 @@
-package com.iti.services.jpa;
+package com.iti.services;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -133,22 +132,22 @@ public class StateService {
 		parkingHistoricalStateDAO.commitAndCloseTransaction();
 	}
 
-	public void registerOrder(final String carNumber, int parkingId, final Date untilDate) throws ParseException {
+	public void registerOrder(final String carNumber, int parkingId, final Date endDate) {
 		parkingCurrentStateDAO.beginTransaction();
 
 		Date startDate = new Date();
-
-		if (parkingCurrentStateDAO.getCurrentStateForCar(carNumber) != null) {
-			ParkingCurrentState parkingCurrentState = parkingCurrentStateDAO.getCurrentStateForCar(carNumber);
-			parkingCurrentState.setParkingUserEndTime(untilDate);
+		
+		ParkingCurrentState parkingCurrentState = parkingCurrentStateDAO.getCurrentStateForCar(carNumber);
+		
+		if (parkingCurrentState != null) {
+			parkingCurrentState.setParkingUserEndTime(endDate);
 			parkingCurrentStateDAO.save(parkingCurrentState);
 		} else {
-
 			ParkingPlace parkingPlace = parkingPlaceDAO.findParkingPlaceById(parkingId);
 			parkingPlace.setParkingAvailableSlots(parkingPlace.getParkingAvailableSlots() - 1);
 			parkingPlaceDAO.update(parkingPlace);
 			
-			ParkingCurrentState newParkingCurrentState = new ParkingCurrentState(parkingPlace, carNumber, startDate, untilDate);
+			ParkingCurrentState newParkingCurrentState = new ParkingCurrentState(parkingPlace, carNumber, startDate, endDate);
 
 			parkingCurrentStateDAO.save(newParkingCurrentState);
 		}
@@ -158,47 +157,15 @@ public class StateService {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				if (System.currentTimeMillis() > untilDate.getTime()) {
+				if (System.currentTimeMillis() > endDate.getTime()) {
 					StateService remover = new StateService();
 					System.out.println("added to history, updated slots");
 					remover.deleteParkingCurrentStateForCar(carNumber);
 				}
 			}
-		}, untilDate.getTime() - startDate.getTime() + 30000);
+		}, endDate.getTime() - startDate.getTime() + 12000);
 
 		parkingCurrentStateDAO.commitAndCloseTransaction();
 	}
 
-	public void registerOrderTest(final String carNumber, int parkingId, long delay) throws ParseException {
-		// parkingCurrentStateDAO.beginTransaction();
-
-		// DateFormat dateFormat = new SimpleDateFormat("yyyyy-MM-dd HH:mm:ss");
-		// Date beginDate = new Date();
-		// String stringDate = dateFormat.format(beginDate);
-		//
-		// Date startDate = dateFormat.parse(stringDate);
-		//
-		// ParkingCurrentState newParkingCurrentState = new ParkingCurrentState(parkingId, carNumber, startDate, startDate);
-		//
-		// parkingCurrentStateDAO.save(newParkingCurrentState);
-		//
-		// ParkingPlace parkingPlace = parkingPlaceDAO.findParkingPlaceById(parkingId);
-		// parkingPlace.setParkingAvailableSlots(parkingPlace.getParkingAvailableSlots() - 1);
-		// parkingPlaceDAO.save(parkingPlace);
-
-		// current state remover timer call
-
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				StateService remover = new StateService();
-				System.out.println("hello");
-				remover.deleteParkingCurrentStateForCar(carNumber);
-			}
-		}, delay);
-
-		// parkingCurrentStateDAO.commitAndCloseTransaction();
-
-	}
 }

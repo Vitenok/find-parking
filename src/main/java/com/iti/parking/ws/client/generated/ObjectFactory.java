@@ -61,7 +61,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link PlaceOrder }{@code >}}
-     *"http://server.ws.parking.iti.com/"
      * 
      */
     @XmlElementDecl(namespace = "http://server.ws.parking.iti.com/", name = "placeOrder")

@@ -13,9 +13,9 @@ import com.iti.parking.entity.jpa.Admin;
 import com.iti.parking.entity.jpa.ParkingCurrentState;
 import com.iti.parking.entity.jpa.ParkingHistoricalState;
 import com.iti.parking.entity.jpa.ParkingPlace;
-import com.iti.services.jpa.AdminService;
-import com.iti.services.jpa.ParkingPlaceService;
-import com.iti.services.jpa.StateService;
+import com.iti.services.AdminService;
+import com.iti.services.ParkingPlaceService;
+import com.iti.services.StateService;
 
 @WebServlet(name = "AdminController", urlPatterns = { "/admin", "/admin/createAdmin", "/admin/deleteAdmin", "/admin/updateAdmin", "/admin/parking/createParking", "/admin/parking/deleteParking", "/admin/parking/updateParking" })
 public class AdminController extends HttpServlet {

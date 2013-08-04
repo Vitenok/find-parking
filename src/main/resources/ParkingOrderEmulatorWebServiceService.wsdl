@@ -3,8 +3,8 @@
 <definitions targetNamespace="http://server.ws.parking.iti.com/" name="ParkingOrderEmulatorWebServiceService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:tns="http://server.ws.parking.iti.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
   <types>
     <xsd:schema>
-      <xsd:import namespace="http://server.ws.parking.iti.com/" schemaLocation="classpath:ParkingOrderEmulatorWebServiceService_schema1.xsd"/>
-    </xsd:schema>  
+      <xsd:import namespace="http://server.ws.parking.iti.com/" schemaLocation="ParkingOrderEmulatorWebServiceService_schema1.xsd"/>
+    </xsd:schema>
   </types>
   <message name="placeOrder">
     <part name="parameters" element="tns:placeOrder"/>
@@ -32,7 +32,7 @@
   </binding>
   <service name="ParkingOrderEmulatorWebServiceService">
     <port name="ParkingOrderEmulatorWebServicePort" binding="tns:ParkingOrderEmulatorWebServicePortBinding">
-      <soap:address location="${endpointURL}"/>
+      <soap:address location="http://localhost:8080/services/emulator"/>
     </port>
   </service>
 </definitions>

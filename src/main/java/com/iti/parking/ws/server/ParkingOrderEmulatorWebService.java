@@ -7,7 +7,8 @@ import javax.jws.WebService;
 public class ParkingOrderEmulatorWebService {
 
 	@WebMethod
-	public String placeOrder(int carNumber, int paringId, String endDate) {
+	public String placeOrder(String carNumber, int paringId, String endDate) {
+		//endDate = miliseconds
 		// TODO method stub
 		return "Ich LIebe Vitek :*:*:*";
 	}

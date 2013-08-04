@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.iti.parking.entity.jpa.Admin;
-import com.iti.services.jpa.AdminService;
+import com.iti.services.AdminService;
 
 /**
  * Servlet implementation class AdminLoginController
@@ -39,7 +39,7 @@ public class AdminLoginController extends HttpServlet {
 			Admin admin = adminService.isValidLogin(login, password);
 			if (admin != null) {
 				session.setAttribute("adminId", admin.getId());
-				response.sendRedirect("/find-parking/admin");
+				response.sendRedirect("/admin");
 			} else {
 				request.setAttribute("errorMsg", "Invalid login or password");
 				request.getRequestDispatcher("adminLogin.jsp").forward(request, response);

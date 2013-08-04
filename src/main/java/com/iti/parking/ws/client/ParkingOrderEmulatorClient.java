@@ -10,6 +10,6 @@ public class ParkingOrderEmulatorClient {
 		ParkingOrderEmulatorWebServiceService service = new ParkingOrderEmulatorWebServiceService();
 		ParkingOrderEmulatorWebService emulator = service.getParkingOrderEmulatorWebServicePort();
 
-		System.out.println(emulator.placeOrder(1, 1, "1"));
+		System.out.println(emulator.placeOrder("1", 1, "1"));
 	}
 }

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.iti.parking.entity.jpa.ParkingCurrentState;
 import com.iti.parking.entity.jpa.ParkingHistoricalState;
 import com.iti.parking.entity.jpa.ParkingPlace;
-import com.iti.services.jpa.ParkingPlaceService;
-import com.iti.services.jpa.StateService;
+import com.iti.services.ParkingPlaceService;
+import com.iti.services.StateService;
 
 @WebServlet(name = "AllPlacesController", urlPatterns = { "" })
 public class AllPlacesController extends HttpServlet {
