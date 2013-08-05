@@ -1,4 +1,4 @@
-7<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.iti.parking.entity.jpa.ParkingCurrentState"%>
@@ -171,6 +171,27 @@
 			});
 	    });
      }
+	
+	function emulation(isEmptyCall, isActivate) {
+		var request = $.ajax({
+			url : 'emulator',
+			type : 'POST',
+			data : {activate: !isEmptyCall ? isActivate : ''}
+		});		
+		
+		request.done(function(msg) {
+			if (msg == 'true') {
+				$("#startEmulation").attr('disabled','disabled');				
+			} else {
+				$("#startEmulation").removeAttr('disabled');
+			}
+		});
+	}
+	
+	$(document).ready(function() {
+		emulation(true);
+	});
+	
 	</script>
 </head>
 <body class="text-center">
@@ -189,11 +210,31 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="navbar navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<input type="button" id="startEmulation" value="Start requests emulation" class="btn btn-primary" onclick="emulation(false, true)">
+				<input type="button" id="stopEmulation" value="Stop requests emulation" class="btn btn-primary" onclick="emulation(false, false)">
+			</div>
+		</div>
+	</div>
 
-	<script type="text/javascript">
-		<jsp:include page="map.jsp"/>
-	</script>
+	<div class="navbar navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<script type="text/javascript">
+					<jsp:include page="map.jsp"/>
+				</script>
+			</div>
+		</div>
+	</div>
 
+	<%
+		List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("allParkingPlacesViewer");
+		if (allParkingPlacesViewer != null) {
+	%>
+			
 	<table class="table table-bordered">
 		<thead>
 		<caption>
@@ -208,10 +249,9 @@
 		</tr>
 
 		<tbody>
+			
 			<%
-				List<ParkingPlace> allParkingPlacesViewer = (List<ParkingPlace>) request.getAttribute("allParkingPlacesViewer");
-				if (allParkingPlacesViewer != null) {
-					for (ParkingPlace pve : allParkingPlacesViewer) {
+				for (ParkingPlace pve : allParkingPlacesViewer) {
 			%>
 			<tr>
 				<td><%=pve.getId()%></td>

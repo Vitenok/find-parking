@@ -17,7 +17,7 @@ import com.iti.services.AdminService;
 import com.iti.services.ParkingPlaceService;
 import com.iti.services.StateService;
 
-@WebServlet(name = "AdminController", urlPatterns = { "/admin", "/admin/createAdmin", "/admin/deleteAdmin", "/admin/updateAdmin", "/admin/parking/createParking", "/admin/parking/deleteParking", "/admin/parking/updateParking" })
+@WebServlet(name = "AdminController", urlPatterns = { "/admin", "/admin/createAdmin", "/admin/deleteAdmin", "/admin/updateAdmin", "/admin/parking/createParking", "/admin/parking/deleteParking"})
 public class AdminController extends HttpServlet {
 
 	private static final long serialVersionUID = -8912740472698890863L;

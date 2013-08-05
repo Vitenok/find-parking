@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, servletNames = { "AdminController" })
+@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, servletNames = { "AdminController", "ParkingOrderEmulatorController"})
 public class AdminLoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

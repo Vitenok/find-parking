@@ -12,7 +12,6 @@ public class ParkingOrderEmulatorWebService {
 
 	@WebMethod
 	public String placeOrder(String carNumber, int paringId, String endDate) {
-
 		try {
 			// endDate in milliseconds convert to Date
 			Date finalDate = new Date(Long.valueOf(endDate));

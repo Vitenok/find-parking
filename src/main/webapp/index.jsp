@@ -5,7 +5,7 @@
 <%@ page import="com.iti.parking.entity.jpa.ParkingHistoricalState"%>
 <html>
 <head>
-<title>Mega Parking page</title>
+<title>Parking page</title>
 <style type="text/css">
 	#car-form{
 		margin: auto;
@@ -26,30 +26,39 @@
 <div class="navbar-inner">
     <div class="container">
     <h1>Home page</h1>
+    	<div id="users-contain">
+			<form method="POST"
+				action="${pageContext.request.contextPath}/admin"
+				style="text-align: right">
+				<input type="submit" value="Admin login" class="btn">
+			</form>
+		</div>
     </div>
    </div> 
 </div>
+
+
 
 <script type="text/javascript">
 	<jsp:include page="map.jsp"/>
 </script>
 
 	
- <form method="POST" action="${action}" id="car-form">
-   <fieldset>
-     <label id ="button-label">Enter car number here to check your data:</label>
-     <input type="text" name="carNumber" >
-     	<span class="help-block"></span>
-     	<button type="submit" class="btn" id="button">Submit</button>
-   </fieldset>
- </form>
+	 <form method="POST" action="${action}" id="car-form">
+	   <fieldset>
+	     <label id ="button-label">Enter car number here to check your data:</label>
+	     <input type="text" name="carNumber" >
+	     	<span class="help-block"></span>
+	     	<button type="submit" class="btn" id="button">Submit</button>
+	   </fieldset>
+	 </form>
 
-	<%
-		ParkingCurrentState currentStateForCar = (ParkingCurrentState) request.getAttribute("currentStateForCar");
-			if (currentStateForCar != null) {
-	%>
-	<h3>Current Car State</h3>
-	<table class="table table-bordered">
+		<%
+			ParkingCurrentState currentStateForCar = (ParkingCurrentState) request.getAttribute("currentStateForCar");
+				if (currentStateForCar != null) {
+		%>
+		<h3>Current Car State</h3>
+		<table class="table table-bordered">
 			<tr>
 				<th>ID</th>
 				<th>Parking address</th>
@@ -65,12 +74,15 @@
 				<td><%=currentStateForCar.getParkingUserStartTime()%></td>
 				<td><%=currentStateForCar.getParkingUserEndTime()%></td>
 			</tr>
-	<%
-			}
-	%>
-
 		</table>
-		
+		<%
+			}
+		%>
+
+		<%
+			List<ParkingHistoricalState> historicalStateForCar = (List<ParkingHistoricalState>) request.getAttribute("historicalStateForCar");
+				if (historicalStateForCar != null) {
+		%>
 		<h3>Archived Car State</h3>
 		<table class="table table-bordered">
 			<thead>
@@ -84,8 +96,6 @@
 			<thead>
 			<tbody>
 		<%
-			List<ParkingHistoricalState> historicalStateForCar = (List<ParkingHistoricalState>) request.getAttribute("historicalStateForCar");
-				if (historicalStateForCar != null) {
 					for (ParkingHistoricalState pve : historicalStateForCar) {
 		%>
 				<tr>

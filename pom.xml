@@ -89,7 +89,7 @@
 				<jdbc.url>jdbc:mysql://localhost:3306/parking</jdbc.url>
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
-				<endpointURL>http://localhost:8080/services/emulator</endpointURL>
+				<endpointURL>http://localhost:8080/find-parking/services/order</endpointURL>
 			</properties>
 			<build>
 				<pluginManagement>
