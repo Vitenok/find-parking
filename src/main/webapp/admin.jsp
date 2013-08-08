@@ -8,15 +8,11 @@
 <head>
 <title>Admin page</title>
 
-<link
-	href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
-	rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-<script type="text/javascript"
-	src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script type="js/bootstrap.js"></script>
 
 <script type="text/javascript">
 
@@ -196,10 +192,10 @@
 </head>
 <body class="text-center">
 
-	<div class="navbar navbar-inverse">
+	<div class="navbar ">
 		<div class="navbar-inner">
 			<div class="container">
-				<h1>Admin page</h1>
+				<h3>Admin page</h3>
 				<div id="users-contain">
 					<form method="POST"
 						action="${pageContext.request.contextPath}/adminLogout"

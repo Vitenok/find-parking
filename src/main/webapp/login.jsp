@@ -28,13 +28,13 @@
 		<div class="control-group">
 		<label class="control-label" for="inputLogin">Login:</label>
 		<div class="controls">
-	 		<input type="text" name="login" id="inputLogin" placeholder="Login">
+	 		<input type="text" name="login" id="inputLogin" placeholder="admin">
 		</div>
 	</div>
 	<div class="control-group">
 		 <label class="control-label" for="inputPassword">Password:</label>
 		 <div class="controls">
-  	         <input type="password" name="password" id="inputPassword" placeholder="Password" >
+  	         <input type="password" name="password" id="inputPassword" placeholder="admin" >
       	 </div>
    </div>
 

@@ -5,12 +5,17 @@
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-<script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 <style type="text/css">
+
+html, body {
+	height: 100%
+}
+
 #map-canvas {
 	margin: 5;
 	padding: 5;
