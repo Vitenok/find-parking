@@ -19,7 +19,7 @@ import com.iti.services.StateService;
 
 @WebServlet(name = "AdminController", urlPatterns = { "/admin", "/admin/createAdmin", "/admin/deleteAdmin", "/admin/updateAdmin", "/admin/parking/createParking", "/admin/parking/deleteParking"})
 public class AdminController extends HttpServlet {
-
+// TEST
 	private static final long serialVersionUID = -8912740472698890863L;
 
 	StateService stateService = new StateService();
