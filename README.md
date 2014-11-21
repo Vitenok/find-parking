@@ -26,5 +26,6 @@ Platforms/frameworks:
 JPA, Servlets 3.0, JAX-WS 2.2, JSP,
 JQuery 2, Twitter Bootstrap 3, Google Maps API
 
+
 Project URL:
 http://parking-iti.rhcloud.com/
